@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dog Walking Service - Dog of the Day</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      background: linear-gradient(270deg, #ff0000, #00ff00, #0000ff, #ff00ff);
+      animation: bgShift 3s linear infinite;
+      color: yellow;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .details {
+      font-size: 10px;
+      background-color: #00ffff;
+      padding: 5px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px red;
+    }
+    img {
+      width: 200px;
+      height: 200px;
+      border: 5px dashed pink;
+      animation: shake 0.5s infinite;
+    }
+    @keyframes shake {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(1deg); }
+      100% { transform: rotate(0deg); }
+    }
+    button {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      margin: 15px;
+      background-color: lime;
+      color: blue;
+      font-size: 8px;
+    }
+    button:focus {
+      outline: none;
+    }
+    marquee {
+      color: red;
+    }
+    a {
+      font-size: 8px;
+      color: lime;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1><marquee>Welcome to Dog Walking Service</marquee></h1>
+
+    <div class="details">
+      <div>Name: Hyper Doggo</div>
+      <div>Breed: Unknown</div>
+      <div>Favorite Activity: Running in Circles</div>
+      <div>Description: Barks nonstop and loves chaos!</div>
+    </div>
+
+    <img :src="dogPic">
+
+    <div style="margin-top: 10px;">
+      <a href="#info1">Dog Info</a> |
+      <a href="#info1">More Info</a> |
+      <a href="#info1">Contact Us</a>
+    </div>
+
+    <div class="button-area">
+      <button @click="fetchDog">Click for Random Dog!</button>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data() {
+        return {
+          dogPic: ''
+        };
+      },
+      mounted() {
+        this.fetchDog();
+      },
+      methods: {
+        fetchDog() {
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(response => response.json())
+            .then(data => {
+              this.dogPic = data.message;
+            });
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
